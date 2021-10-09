@@ -2,6 +2,8 @@
 TEAM: Da Wei
 THEME: API Hate
 
+---
+
 ## Introduction
 
 #### Project Description
@@ -32,11 +34,14 @@ git clone https://github.com/pauwei/fall-da-wei.git
 cd fall-da-wei
 npm i
 ```
+3. Run the project using `expo start`
 
-#### Scripts
+
+## Scripts
 
 `npm start` or `expo start`
 
 Runs the client app in development mode. Expo will automatically open a localhost for you to test using a real or virtual device
 
 ## Config
+Currently has no specific configurations. May change in the future for containing keys for AI/ML API keys
