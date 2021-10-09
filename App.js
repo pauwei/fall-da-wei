@@ -51,6 +51,8 @@ export default function App() {
         onPress={() => Alert.alert('Thank you for the input')}
       />
 
+      <Text>Gyroscope axis: </Text>
+
       <Text style={styles.text}>
         x: {round(x)} y: {round(y)} z: {round(z)}
       </Text>
