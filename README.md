@@ -34,7 +34,10 @@ git clone https://github.com/pauwei/fall-da-wei.git
 cd fall-da-wei
 npm i
 ```
-3. Run the project using `expo start`
+3. Run the project using the following command:
+```sh
+expo start
+```
 
 
 ## Scripts
