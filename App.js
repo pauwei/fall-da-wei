@@ -23,12 +23,20 @@ export default function App() {
   const [accelBuffer, setAccelBuffer] = useState([{x: 0, y: 0, z: 0}]);
   const [motion, setMotion] = useState("Stable");
 
+  const [timer, setTimer] = useState(null);
+  const [counter, setCounter] = useState(30);
+
   const _setStable = () => {
     setMotion("Stable");
+    setCounter(30);
+    clearInterval(timer);
+  }
+
+  const _tick = () => {
+    setCounter(counter - 1);
   }
 
   useEffect(() => {
-    //console.log(gyro.x + ", " + accel);
     const bufferLength = 30;  //3 seconds
 
     let gyroArray = [...gyroBuffer];
@@ -45,6 +53,10 @@ export default function App() {
     accelArray.push(accel);
     setAccelBuffer(accelArray);
 
+    if (motion == "Falling" && timer != null) {
+      let timer = setInterval(_tick, 1000);
+      setTimer(timer);
+    }
 
   }, [gyro, accel]);
 
@@ -72,10 +84,13 @@ export default function App() {
       <View style={styles.container}>
         <Detection gyroBuffer={gyroBuffer} accelBuffer={accelBuffer} setMotion={setMotion}/>
         <Text style={styles.text}>Status: {motion}</Text>
-        <TouchableOpacity onPress={_setStable} style={[styles.button, styles.middleButton]}>
+
+      </View>
+      <View style={styles.buttonContainer}>
+        {motion == "Falling" && <Text style={styles.text}>{counter}</Text>}
+        <TouchableOpacity onPress={_setStable} style={styles.roundButton}>
           <Text>I'm Okay</Text>
         </TouchableOpacity>
-
       </View>
 
     </View>
@@ -108,13 +123,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#eee',
+    backgroundColor: '#4c8bf5',
     padding: 10,
   },
   middleButton: {
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderColor: '#ccc',
+  },
+  roundButton: {
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: '#4c8bf5',
   },
 });
 
