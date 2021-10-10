@@ -66,7 +66,7 @@ export default function App() {
 
       <View style={styles.container}>
         <Gyro gyro={gyro} setGyro={setGyro}/>  
-        <Text style={styles.text}>Gyro</Text>
+        <Text style={styles.titleText}>Gyro</Text>
         <Text style={styles.text}>
           x: {round(gyro.x)} y: {round(gyro.y)} z: {round(gyro.z)}
         </Text>
@@ -74,7 +74,7 @@ export default function App() {
 
       <View style={styles.container}>
         <Accel accel={accel} setAccel={setAccel}/>
-        <Text style={styles.text}>Acceleration</Text>
+        <Text style={styles.titleText}>Acceleration</Text>
         <Text style={styles.text}>
           x: {round(accel.x)} y: {round(accel.y)} z: {round(accel.z)}
         </Text>
@@ -83,15 +83,24 @@ export default function App() {
 
       <View style={styles.container}>
         <Detection gyroBuffer={gyroBuffer} accelBuffer={accelBuffer} setMotion={setMotion}/>
-        <Text style={styles.text}>Status: {motion}</Text>
+        <Text style={styles.titleText}>Status: {motion}</Text>
 
       </View>
       <View style={styles.buttonContainer}>
-        {motion == "Falling" && <Text style={styles.text}>{counter}</Text>}
+        {motion == "Falling" && <Text justifyContent = 'center' style={styles.counterText} >{counter}</Text>}
+      </View>
+
+      <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={_setStable} style={styles.roundButton}>
-          <Text>I'm Okay</Text>
+          <Text style = {styles.buttonText} >I'm Okay</Text>
         </TouchableOpacity>
       </View>
+    
+    <View>
+    <Text></Text>
+    <Text></Text>
+    <Text></Text>
+    </View>
 
     </View>
 
@@ -111,12 +120,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
+  titleText: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      justifyContent: 'center',
+      textAlign: 'center',
+  },
   text: {
     textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+    fontFamily: 'Arial',
   },
+
   buttonContainer: {
     flexDirection: 'row',
-    alignItems: 'stretch',
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
     marginTop: 15,
   },
   button: {
@@ -131,8 +152,17 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderColor: '#ccc',
   },
+  counterText: {
+      fontSize: 40,
+      fontWeight: 'bold',
+  },
+
+  buttonText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
   roundButton: {
-    width: 100,
+    width: 200,
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',

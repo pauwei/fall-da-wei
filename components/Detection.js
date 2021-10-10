@@ -15,7 +15,7 @@ const Detection = (props) => {
         let gyroMagnitude = Math.sqrt(Math.pow(lastGyro.x, 2) + Math.pow(lastGyro.y, 2) + Math.pow(lastGyro.z, 2));
         let accelMagnitude = Math.sqrt(Math.pow(lastAccel.x, 2) + Math.pow(lastAccel.y, 2) + Math.pow(lastAccel.z, 2));
 
-        if (gyroMagnitude >= 10) {
+        if (gyroMagnitude >= 18 || lastAccel.y>=2.5 && gyroMagnitude>=6) {
             setMotion("Falling");
             console.log("Detected Fall, Gyro: " + gyroMagnitude + ", y accel: " + Math.abs(lastAccel.y)+ ", z accel: " + Math.abs(lastAccel.z));
         }
