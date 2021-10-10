@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Timer } from 'react-native-stopwatch-timer';
 import Gyro from './components/Gyro';
 import Accel from './components/Accel';
 import Detection from './components/Detection';
@@ -23,17 +24,13 @@ export default function App() {
   const [accelBuffer, setAccelBuffer] = useState([{x: 0, y: 0, z: 0}]);
   const [motion, setMotion] = useState("Stable");
 
-  const [timer, setTimer] = useState(null);
-  const [counter, setCounter] = useState(30);
+  const [isTimerStart, setIsTimerStart] = useState(false);
+  const [timerDuration, setTimerDuration] = useState(30000);
+  const [resetTimer, setResetTimer] = useState(false);
 
   const _setStable = () => {
     setMotion("Stable");
-    setCounter(30);
-    clearInterval(timer);
-  }
-
-  const _tick = () => {
-    setCounter(counter - 1);
+    setIsTimerStart(false);
   }
 
   useEffect(() => {
@@ -53,10 +50,11 @@ export default function App() {
     accelArray.push(accel);
     setAccelBuffer(accelArray);
 
-    if (motion == "Falling" && timer != null) {
-      let timer = setInterval(_tick, 1000);
-      setTimer(timer);
-    }
+    // if (motion == "Falling" && isTimerStart == false) {
+    //   console.log("Starting timer");
+    //   setIsTimerStart(true);
+    //   setResetTimer(false);
+    // }
 
   }, [gyro, accel]);
 
@@ -82,12 +80,27 @@ export default function App() {
       </View>
 
       <View style={styles.container}>
-        <Detection gyroBuffer={gyroBuffer} accelBuffer={accelBuffer} setMotion={setMotion}/>
+        <Detection gyroBuffer={gyroBuffer} accelBuffer={accelBuffer} setMotion={setMotion} setIsTimerStart={setIsTimerStart} setResetTimer={setResetTimer}/>
         <Text style={styles.text}>Status: {motion}</Text>
 
       </View>
       <View style={styles.buttonContainer}>
-        {motion == "Falling" && <Text style={styles.text}>{counter}</Text>}
+        {motion == "Falling" && 
+          <Timer
+            totalDuration={timerDuration}
+            msecs
+            start={isTimerStart}
+            reset={resetTimer}
+            options={options}
+            handleFinish={() => {
+              alert("Contacting Your Emergency Contact!");
+            }}
+
+            getTime={(time) => {
+              console.log(time);
+            }}
+
+          />}
         <TouchableOpacity onPress={_setStable} style={styles.roundButton}>
           <Text>I'm Okay</Text>
         </TouchableOpacity>
@@ -141,6 +154,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#4c8bf5',
   },
 });
+
+const options = {
+  container: {
+    backgroundColor: '#FF0000',
+    padding: 5,
+    borderRadius: 5,
+    width: 200,
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 25,
+    color: '#FFF',
+    marginLeft: 7,
+  },
+};
 
 
     // <View style={styles.container}>

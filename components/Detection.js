@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 
 const Detection = (props) => {
-    const { gyroBuffer, accelBuffer, setMotion } = props;
+    const { gyroBuffer, accelBuffer, setMotion, setIsTimerStart, setResetTimer } = props;
 
     const _detectMotion = () => {
         //Available data
@@ -17,6 +17,8 @@ const Detection = (props) => {
 
         if (gyroMagnitude >= 10) {
             setMotion("Falling");
+            setIsTimerStart(true);
+            setResetTimer(false);
             console.log("Detected Fall, Gyro: " + gyroMagnitude + ", y accel: " + Math.abs(lastAccel.y)+ ", z accel: " + Math.abs(lastAccel.z));
         }
 
