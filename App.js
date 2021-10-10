@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Gyro from './components/Gyro';
 import Accel from './components/Accel';
 import Detection from './components/Detection';
+//amazing poopy pants
 
 
 export default function App() {
@@ -18,10 +19,33 @@ export default function App() {
     z: 0,
   });
 
-  const [motion, setMotion] = useState("Sitting");
+  const [gyroBuffer, setGyroBuffer] = useState([{x: 0, y: 0, z: 0}]);
+  const [accelBuffer, setAccelBuffer] = useState([{x: 0, y: 0, z: 0}]);
+  const [motion, setMotion] = useState("Stable");
+
+  const _setStable = () => {
+    setMotion("Stable");
+  }
 
   useEffect(() => {
     //console.log(gyro.x + ", " + accel);
+    const bufferLength = 30;  //3 seconds
+
+    let gyroArray = [...gyroBuffer];
+    if (gyroBuffer.length >= bufferLength) {
+      gyroArray.splice(0, 1); //Delete first element
+    }
+    gyroArray.push(gyro);
+    setGyroBuffer(gyroArray);
+
+    let accelArray = [...accelBuffer];
+    if (accelBuffer.length >= bufferLength) {
+      accelArray.splice(0, 1); //Delete first element
+    }
+    accelArray.push(accel);
+    setAccelBuffer(accelArray);
+
+
   }, [gyro, accel]);
 
 
@@ -46,8 +70,11 @@ export default function App() {
       </View>
 
       <View style={styles.container}>
-        <Detection gyro={gyro} accel={accel} setMotion={setMotion}/>
-        <Text style={styles.text}>Status: Sitting</Text>
+        <Detection gyroBuffer={gyroBuffer} accelBuffer={accelBuffer} setMotion={setMotion}/>
+        <Text style={styles.text}>Status: {motion}</Text>
+        <TouchableOpacity onPress={_setStable} style={[styles.button, styles.middleButton]}>
+          <Text>I'm Okay</Text>
+        </TouchableOpacity>
 
       </View>
 
