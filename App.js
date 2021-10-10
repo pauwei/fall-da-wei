@@ -47,43 +47,12 @@ export default function App() {
 
       <View style={styles.container}>
         <Detection gyro={gyro} accel={accel} setMotion={setMotion}/>
+        <Text style={styles.text}>Status: Sitting</Text>
 
       </View>
 
     </View>
-    // <View style={styles.container}>
-    //   <Text style={styles.text}>Accelerometer: (in Gs where 1 G = 9.81 m s^-2)</Text>
-    //   <Text style={styles.text}>
-    //     x: {round(x)} y: {round(y)} z: {round(z)}
-    //   </Text>
-    //   <View style={styles.buttonContainer}>
-    //     <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
-    //       <Text>{subscription ? 'On' : 'Off'}</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
-    //       <Text>Slow</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity onPress={_fast} style={styles.button}>
-    //       <Text>Fast</Text>
-    //     </TouchableOpacity>
-    //   </View>
 
-    //   <Text style={styles.text}>Gyroscope:</Text>
-    //   <Text style={styles.text}>
-    //     x: {round(xa)} y: {round(ya)} z: {round(za)}
-    //   </Text>
-    //   <View style={styles.buttonContainer}>
-    //     <TouchableOpacity onPress={subscription ? _unsubscribeA : _subscribeA} style={styles.button}>
-    //       <Text>{subscription ? 'On' : 'Off'}</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity onPress={_slowA} style={[styles.button, styles.middleButton]}>
-    //       <Text>Slow</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity onPress={_fastA} style={styles.button}>
-    //       <Text>Fast</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </View>
   );
 }
 
@@ -123,3 +92,36 @@ const styles = StyleSheet.create({
 });
 
 
+    // <View style={styles.container}>
+    //   <Text style={styles.text}>Accelerometer: (in Gs where 1 G = 9.81 m s^-2)</Text>
+    //   <Text style={styles.text}>
+    //     x: {round(x)} y: {round(y)} z: {round(z)}
+    //   </Text>
+    //   <View style={styles.buttonContainer}>
+    //     <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
+    //       <Text>{subscription ? 'On' : 'Off'}</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
+    //       <Text>Slow</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_fast} style={styles.button}>
+    //       <Text>Fast</Text>
+    //     </TouchableOpacity>
+    //   </View>
+
+    //   <Text style={styles.text}>Gyroscope:</Text>
+    //   <Text style={styles.text}>
+    //     x: {round(xa)} y: {round(ya)} z: {round(za)}
+    //   </Text>
+    //   <View style={styles.buttonContainer}>
+    //     <TouchableOpacity onPress={subscription ? _unsubscribeA : _subscribeA} style={styles.button}>
+    //       <Text>{subscription ? 'On' : 'Off'}</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_slowA} style={[styles.button, styles.middleButton]}>
+    //       <Text>Slow</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_fastA} style={styles.button}>
+    //       <Text>Fast</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    // </View>

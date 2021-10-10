@@ -21,3 +21,5 @@ const Detection = (props) => {
         </View>
     );
 }
+
+export default Detection;
