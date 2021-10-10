@@ -23,17 +23,16 @@ export default function App() {
   const [accelBuffer, setAccelBuffer] = useState([{x: 0, y: 0, z: 0}]);
   const [motion, setMotion] = useState("Stable");
 
-  const [timer, setTimer] = useState(null);
-  const [counter, setCounter] = useState(30);
+  //const [timer, setTimer] = useState(null);
+  const [seconds, setSeconds] = useState(300);
 
   const _setStable = () => {
     setMotion("Stable");
-    setCounter(30);
-    clearInterval(timer);
+    setSeconds(30);
   }
 
   const _tick = () => {
-    setCounter(counter - 1);
+    setSeconds(seconds - 1);
   }
 
   useEffect(() => {
@@ -53,9 +52,17 @@ export default function App() {
     accelArray.push(accel);
     setAccelBuffer(accelArray);
 
-    if (motion == "Falling" && timer != null) {
-      let timer = setInterval(_tick, 1000);
-      setTimer(timer);
+
+    if (motion == "Falling") {
+      setSeconds(seconds - 1);
+    }
+
+    //console.log(seconds);
+
+    if (seconds <= 0 && motion == "Falling") {
+      alert("Contacting Emergency Contact . . . \nStarting Audio Recording . . .");
+      setMotion("Recording");
+      setSeconds(300);
     }
 
   }, [gyro, accel]);
@@ -87,7 +94,7 @@ export default function App() {
 
       </View>
       <View style={styles.buttonContainer}>
-        {motion == "Falling" && <Text justifyContent = 'center' style={styles.counterText} >{counter}</Text>}
+        {motion == "Falling" && <Text justifyContent = 'center' style={styles.counterText} >{seconds / 10}</Text>}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -130,7 +137,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    fontFamily: 'Arial',
+    //fontFamily: 'Arial',
   },
 
   buttonContainer: {
