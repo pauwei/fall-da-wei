@@ -1,114 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Accelerometer, Gyroscope } from 'expo-sensors';
+import Gyro from './components/Gyro';
+import Accel from './components/Accel';
+
 
 export default function App() {
-  const [data, setData] = useState({
+  const [gyro, setGyro] = useState({
     x: 0,
     y: 0,
     z: 0,
   });
 
-  const [dataA, setDataA] = useState({
-    xa: 0,
-    ya: 0,
-    za: 0,
+  const [accel, setAccel] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
   });
-  const [subscription, setSubscription] = useState(null);
-  const [subscriptionA, setSubscriptionA] = useState(null);
-
-  const _slow = () => {
-    Accelerometer.setUpdateInterval(1000);
-  };
-
-  const _slowA = () => {
-    Gyroscope.setUpdateInterval(1000);
-  };
-
-
-  const _fast = () => {
-    Accelerometer.setUpdateInterval(16);
-  };
-
-  const _fastA = () => {
-    Gyroscope.setUpdateInterval(16);
-  };
-
-
-  const _subscribe = () => {
-    setSubscription(
-      Accelerometer.addListener(accelerometerData => {
-        setData(accelerometerData);
-      })
-    );
-  };
-
-  const _subscribeA = () => {
-    setSubscriptionA(
-      Gyroscope.addListener(gyroscopeData => {
-        setDataA(gyroscopeData);
-      })
-    );
-  };
-
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
-  };
-
-  const _unsubscribeA = () => {
-    subscriptionA && subscriptionA.remove();
-    setSubscriptionA(null);
-  };
-
 
   useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
-  }, []);
+    //console.log(gyro.x + ", " + accel);
+  }, [gyro, accel]);
 
-  useEffect(() => {
-    _subscribeA();
-    return () => _unsubscribeA();
-  }, []);
-
-  const { x, y, z } = data;
-  const { xa, ya, za } = dataA;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Accelerometer: (in Gs where 1 G = 9.81 m s^-2)</Text>
-      <Text style={styles.text}>
-        x: {round(x)} y: {round(y)} z: {round(z)}
-      </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
-          <Text>{subscription ? 'On' : 'Off'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
-          <Text>Slow</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_fast} style={styles.button}>
-          <Text>Fast</Text>
-        </TouchableOpacity>
+
+      <View style={styles.container}>
+        <Gyro gyro={gyro} setGyro={setGyro}/>  
+        <Text style={styles.text}>Gyro</Text>
+        <Text style={styles.text}>
+          x: {round(gyro.x)} y: {round(gyro.y)} z: {round(gyro.z)}
+        </Text>
       </View>
 
-      <Text style={styles.text}>Gyroscope:</Text>
-      <Text style={styles.text}>
-        x: {round(xa)} y: {round(ya)} z: {round(za)}
-      </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={subscription ? _unsubscribeA : _subscribeA} style={styles.button}>
-          <Text>{subscription ? 'On' : 'Off'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_slowA} style={[styles.button, styles.middleButton]}>
-          <Text>Slow</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_fastA} style={styles.button}>
-          <Text>Fast</Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <Accel accel={accel} setAccel={setAccel}/>
+        <Text style={styles.text}>Acceleration</Text>
+        <Text style={styles.text}>
+          x: {round(accel.x)} y: {round(accel.y)} z: {round(accel.z)}
+        </Text>
+
       </View>
+
     </View>
+    // <View style={styles.container}>
+    //   <Text style={styles.text}>Accelerometer: (in Gs where 1 G = 9.81 m s^-2)</Text>
+    //   <Text style={styles.text}>
+    //     x: {round(x)} y: {round(y)} z: {round(z)}
+    //   </Text>
+    //   <View style={styles.buttonContainer}>
+    //     <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
+    //       <Text>{subscription ? 'On' : 'Off'}</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
+    //       <Text>Slow</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_fast} style={styles.button}>
+    //       <Text>Fast</Text>
+    //     </TouchableOpacity>
+    //   </View>
+
+    //   <Text style={styles.text}>Gyroscope:</Text>
+    //   <Text style={styles.text}>
+    //     x: {round(xa)} y: {round(ya)} z: {round(za)}
+    //   </Text>
+    //   <View style={styles.buttonContainer}>
+    //     <TouchableOpacity onPress={subscription ? _unsubscribeA : _subscribeA} style={styles.button}>
+    //       <Text>{subscription ? 'On' : 'Off'}</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_slowA} style={[styles.button, styles.middleButton]}>
+    //       <Text>Slow</Text>
+    //     </TouchableOpacity>
+    //     <TouchableOpacity onPress={_fastA} style={styles.button}>
+    //       <Text>Fast</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    // </View>
   );
 }
 
@@ -116,7 +83,7 @@ function round(n) {
   if (!n) {
     return 0;
   }
-  return Math.floor(n * 100) / 100;
+  return Math.floor(n * 100) / 100.0;
 }
 
 const styles = StyleSheet.create({
@@ -146,4 +113,5 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
 });
+
 
