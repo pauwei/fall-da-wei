@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Gyro from './components/Gyro';
 import Accel from './components/Accel';
+import Detection from './components/Detection';
 
 
 export default function App() {
@@ -16,6 +17,8 @@ export default function App() {
     y: 0,
     z: 0,
   });
+
+  const [motion, setMotion] = useState("Sitting");
 
   useEffect(() => {
     //console.log(gyro.x + ", " + accel);
@@ -39,6 +42,11 @@ export default function App() {
         <Text style={styles.text}>
           x: {round(accel.x)} y: {round(accel.y)} z: {round(accel.z)}
         </Text>
+
+      </View>
+
+      <View style={styles.container}>
+        <Detection gyro={gyro} accel={accel} setMotion={setMotion}/>
 
       </View>
 
