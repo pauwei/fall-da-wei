@@ -28,7 +28,7 @@ export default function App() {
 
   const _setStable = () => {
     setMotion("Stable");
-    setSeconds(30);
+    setSeconds(300);
   }
 
   const _tick = () => {
